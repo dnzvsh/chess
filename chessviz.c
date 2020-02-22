@@ -7,12 +7,12 @@ typedef struct {
 
 void initial_state()
 {
-    Figure king[2] = {'K', 'k'};
-    Figure queen[2] = {'Q', 'q'};
-    Figure bishop[2] = {'B', 'b'};
-    Figure knight[2] = {'N', 'n'};
-    Figure rook[2] = {'R', 'r'};
-    Figure pawn[2] = {'P', 'p'};
+    Figure king[2] = {{'K'}, {'k'}};
+    Figure queen[2] = {{'Q'}, {'q'}};
+    Figure bishop[2] = {{'B'}, {'b'}};
+    Figure knight[2] = {{'N'}, {'n'}};
+    Figure rook[2] = {{'R'}, {'r'}};
+    Figure pawn[2] = {{'P'}, {'p'}};
     Figure nan = {'0'};
     Figure arr[8][8];
     printf("   1 2 3 4 5 6 7 8\n");
@@ -48,7 +48,7 @@ void initial_state()
                 arr[i][j] = nan;
             }
 
-            printf("%c ", arr[i][j]);
+            printf("%c ", arr[i][j].form);
         }
         printf("\n");
     }
