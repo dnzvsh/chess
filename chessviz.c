@@ -27,7 +27,10 @@ void initial_board(char chess[][8])
             chess[i][j] = ' ';
         }
     }
+}
 
+void print_board(char chess[][8])
+{
     printf("   A B C D E F G H\n   _______________\n");
     for (int i = 0; i < 8; i++) {
         printf("%d |", i + 1);
@@ -42,5 +45,6 @@ int main()
 {
     char chess[8][8] = {{' '}};
     initial_board(chess);
+    print_board(chess);
     return 0;
 }
