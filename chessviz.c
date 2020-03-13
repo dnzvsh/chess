@@ -1,7 +1,14 @@
-#include <stdio.h>
 #include <ctype.h>
+#include <stdio.h>
 
-void initial_board(char chess[][8])
+void swap(char* a, char* b)
+{
+    char tmp = *a;
+    *a = *b;
+    *b = tmp;
+}
+
+void fill_chess(char chess[][8])
 {
     chess[0][0] = 'R';
     chess[0][1] = 'N';
@@ -18,8 +25,8 @@ void initial_board(char chess[][8])
     chess[7][0] = 'r';
     chess[7][1] = 'n';
     chess[7][2] = 'b';
-    chess[7][3] = 'k';
-    chess[7][4] = 'q';
+    chess[7][3] = 'q';
+    chess[7][4] = 'k';
     chess[7][5] = 'b';
     chess[7][6] = 'n';
     chess[7][7] = 'r';
@@ -62,6 +69,30 @@ void char_to_board(char* sdt, int* wturn)
     }
 }
 
+//Проверка максимального хода для пешки
+int check_pawn(char board[][8], int* wturn)
+{
+    int max_turn;
+    if (wturn[1] == 1) {
+        max_turn = 2;
+    } else
+        max_turn = 1;
+    int count = 0;
+    for (int i = 1; i <= max_turn; i++) {
+        if (board[wturn[1]][i + wturn[0]] == ' ') {
+            count++;
+        }
+    }
+    if (!count && wturn[0] == wturn[2]) {
+        if (wturn[3] - wturn[1] <= max_turn && wturn[3] - wturn[1] > 0) {
+            swap(&board[wturn[1]][wturn[0]], &board[wturn[3]][wturn[2]]);
+            return 0;
+        }
+    }
+    printf("\ncan't move like that)))))\n");
+    return 1;
+}
+//Запись хода
 void* scan_turn(char* sdt, int* wturn)
 {
     scanf("%c%c-%c%c", &sdt[0], &sdt[1], &sdt[2], &sdt[3]);
@@ -71,6 +102,7 @@ void* scan_turn(char* sdt, int* wturn)
     printf("  to %d %d\n", wturn[2], wturn[3]);
 }
 
+//Проверка находится ли фигура в положении "откуда"
 int check_from(char board[][8], int* wturn)
 {
     if (board[wturn[1]][wturn[0]] == ' ') {
@@ -79,6 +111,7 @@ int check_from(char board[][8], int* wturn)
     return 0;
 }
 
+//Проверка есть ли свободное место в положении "куда"
 int check_to(char board[][8], int* wturn)
 {
     if (board[wturn[3]][wturn[2]] == ' ') {
@@ -90,10 +123,23 @@ int check_to(char board[][8], int* wturn)
 int main()
 {
     char chess[8][8] = {{' '}};
-    initial_board(chess);
+    fill_chess(chess);
     print_board(chess);
     char sdt[12];
     int wturn[4];
     scan_turn(sdt, wturn);
+    int flag_from = check_from(chess, wturn);
+    if (flag_from == -1) {
+        printf("\nWrong format input\n");
+    }
+    int flag_to = check_to(chess, wturn);
+    if (flag_to == -1) {
+        printf("\nCan't move here\n");
+    }
+    if (!flag_from && !flag_to) {
+        check_pawn(chess, wturn);
+    }
+    print_board(chess);
+
     return 0;
 }
