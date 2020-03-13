@@ -79,6 +79,14 @@ int check_from(char board[][8], int* wturn)
     return 0;
 }
 
+int check_to(char board[][8], int* wturn)
+{
+    if (board[wturn[3]][wturn[2]] == ' ') {
+        return 0;
+    }
+    return -1;
+}
+
 int main()
 {
     char chess[8][8] = {{' '}};
