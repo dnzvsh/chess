@@ -1,4 +1,5 @@
 #include <stdio.h>
+#include <ctype.h>
 
 void initial_board(char chess[][8])
 {
@@ -41,10 +42,42 @@ void print_board(char chess[][8])
     }
 }
 
+void char_to_board(char* sdt, int* wturn)
+{
+    for (int j = 0; j < 4; j++) {
+        printf("%d ", sdt[j]);
+    }
+    printf("\n");
+    for (int i = 0; i < 12; i++) {
+        int char1;
+        if (sdt[i] == '\0')
+            break;
+        if (isalpha(sdt[i]) != 0) {
+            char1 = (int)sdt[i] - 97;
+        }
+        if (isdigit(sdt[i]) != 0) {
+            char1 = (int)sdt[i] - 49;
+        }
+        wturn[i] = char1;
+    }
+}
+
+void* scan_turn(char* sdt, int* wturn)
+{
+    scanf("%c%c-%c%c", &sdt[0], &sdt[1], &sdt[2], &sdt[3]);
+    sdt[4] = '\n';
+    char_to_board(sdt, wturn);
+    printf("\nfrom %d %d\n", wturn[0], wturn[1]);
+    printf("  to %d %d\n", wturn[2], wturn[3]);
+}
+
 int main()
 {
     char chess[8][8] = {{' '}};
     initial_board(chess);
     print_board(chess);
+    char sdt[12];
+    int wturn[4];
+    scan_turn(sdt, wturn);
     return 0;
 }
