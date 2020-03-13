@@ -71,6 +71,14 @@ void* scan_turn(char* sdt, int* wturn)
     printf("  to %d %d\n", wturn[2], wturn[3]);
 }
 
+int check_from(char board[][8], int* wturn)
+{
+    if (board[wturn[1]][wturn[0]] == ' ') {
+        return -1;
+    }
+    return 0;
+}
+
 int main()
 {
     char chess[8][8] = {{' '}};
