@@ -8,8 +8,7 @@ void swap(char* a, char* b)
     *b = tmp;
 }
 
-void fill_chess(char chess[][8])
-{
+void fill_chess(char chess[][8]){
     chess[0][0] = 'R';
     chess[0][1] = 'N';
     chess[0][2] = 'B';
