@@ -8,9 +8,10 @@ void swap(char* a, char* b)
     *b = tmp;
 }
 
-void fill_chess(char chess[][8]){
-     chess[0][0] = 'R';
-  	  chess[0][1] = 'N';
+void fill_chess(char chess[][8])
+{
+    chess[0][0] = 'R';
+    chess[0][1] = 'N';
     chess[0][2] = 'B';
     chess[0][3] = 'K';
     chess[0][4] = 'Q';
@@ -32,7 +33,8 @@ void fill_chess(char chess[][8]){
     for (int i = 2; i < 6; i++) {
         for (int j = 0; j < 8; j++) {
             chess[i][j] = ' ';
-        }}
+        }
+    }
 }
 
 void print_board(char chess[][8])
@@ -68,7 +70,7 @@ void char_to_board(char* sdt, int* wturn)
 }
 
 //Проверка максимального хода для пешки
-int check_pawn(char board[][8], int* wturn)
+int check_pawn_white(char board[][8], int* wturn)
 {
     int max_turn;
     if (wturn[1] == 1) {
@@ -90,13 +92,36 @@ int check_pawn(char board[][8], int* wturn)
     printf("\ncan't move like that)))))\n");
     return 1;
 }
+
+int check_pawn_black(char board[][8], int* wturn)
+{
+    int max_turn;
+    if (wturn[1] == 1) {
+        max_turn = 2;
+    } else
+        max_turn = 1;
+    int count = 0;
+    for (int i = 1; i <= wturn[3]; i++) {
+        if (board[wturn[1]][wturn[0] - i] == ' ') {
+            count++;
+        }
+    }
+    if (!count && wturn[0] == wturn[2]) {
+        if (wturn[1] - wturn[3] <= max_turn && wturn[1] > wturn[3]) {
+            swap(&board[wturn[1]][wturn[0]], &board[wturn[3]][wturn[2]]);
+            return 0;
+        }
+    }
+    printf("\ncan't move like that)))))\n");
+    return 1;
+}
 //Запись хода
 void scan_turn(char* sdt, int* wturn)
 {
-    scanf("%c%c-%c%c", &sdt[0], &sdt[1], &sdt[2], &sdt[3]);
-    sdt[4] = '\n';
+    int y = scanf("%c%c-%c%c", &sdt[0], &sdt[1], &sdt[2], &sdt[3]);
+    sdt[4] = '\0';
     char_to_board(sdt, wturn);
-    printf("\nfrom %d %d\n", wturn[0], wturn[1]);
+    printf("\ny=%d\nfrom %d %d\n", y, wturn[0], wturn[1]);
     printf("  to %d %d\n", wturn[2], wturn[3]);
 }
 
@@ -135,7 +160,21 @@ int main()
         printf("\nCan't move here\n");
     }
     if (!flag_from && !flag_to) {
-        check_pawn(chess, wturn);
+        check_pawn_white(chess, wturn);
+    }
+    print_board(chess);
+
+    scan_turn(sdt, wturn);
+    flag_from = check_from(chess, wturn);
+    if (flag_from == -1) {
+        printf("\nWrong format input\n");
+    }
+    flag_to = check_to(chess, wturn);
+    if (flag_to == -1) {
+        printf("\nCan't move here\n");
+    }
+    if (!flag_from && !flag_to) {
+        check_pawn_black(chess, wturn);
     }
     print_board(chess);
 
