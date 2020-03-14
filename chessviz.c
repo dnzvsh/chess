@@ -9,8 +9,8 @@ void swap(char* a, char* b)
 }
 
 void fill_chess(char chess[][8]){
-    chess[0][0] = 'R';
-    chess[0][1] = 'N';
+     chess[0][0] = 'R';
+  	  chess[0][1] = 'N';
     chess[0][2] = 'B';
     chess[0][3] = 'K';
     chess[0][4] = 'Q';
@@ -32,8 +32,7 @@ void fill_chess(char chess[][8]){
     for (int i = 2; i < 6; i++) {
         for (int j = 0; j < 8; j++) {
             chess[i][j] = ' ';
-        }
-    }
+        }}
 }
 
 void print_board(char chess[][8])
