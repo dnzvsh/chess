@@ -78,13 +78,13 @@ int check_pawn(char board[][8], int* wturn)
     } else
         max_turn = 1;
     int count = 0;
-    for (int i = 1; i <= max_turn; i++) {
+    for (int i = 1; i <= wturn[3]; i++) {
         if (board[wturn[1]][i + wturn[0]] == ' ') {
             count++;
         }
     }
     if (!count && wturn[0] == wturn[2]) {
-        if (wturn[3] - wturn[1] <= max_turn && wturn[3] - wturn[1] > 0) {
+        if (wturn[3] - wturn[1] <= max_turn && wturn[3] > wturn[1]) {
             swap(&board[wturn[1]][wturn[0]], &board[wturn[3]][wturn[2]]);
             return 0;
         }
