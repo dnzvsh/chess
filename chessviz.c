@@ -93,7 +93,7 @@ int check_pawn(char board[][8], int* wturn)
     return 1;
 }
 //Запись хода
-void* scan_turn(char* sdt, int* wturn)
+void scan_turn(char* sdt, int* wturn)
 {
     scanf("%c%c-%c%c", &sdt[0], &sdt[1], &sdt[2], &sdt[3]);
     sdt[4] = '\n';
